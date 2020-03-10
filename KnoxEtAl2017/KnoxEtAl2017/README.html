@@ -1,0 +1,33 @@
+<html>
+<p>This is the README for the NEURON code used to generate the results in the paper:
+Knox A, Glauser T, Tenney T, Lytton W, Holland K, Modeling pathogenesis and treatment response in childhood absence epilepsy, Epilepsia 2017, doi: 10.1111/epi.13962
+</p><p>This is an implementation of the model described in the paper:
+Destexhe, Alain, Spike-and-Wave Oscillations Based on the Properties of GABAB Receptors, The Journal of Neuroscience, November 1, 1998, 18(21):9099-9111
+</p><p>The bulk of the implementation was taken from Thalamocortical and Thalamic Reticular Network (Destexhe et al 1996, ModelDB Acession:3343), including the bulk of the mechanisms (some modifications were made to GABA-A, GABA-B, and AMPA receptors to optimize performance).  The program file FSpikeWave.oc was created by modifying the file Fspin.oc from to create the four layer network described in the paper listed above, with various other functions added.  As far as I can tell it is true to the original Destexhe Spike-and-Wave Oscillation model, although it may be that a slightly different implementation of GABA-B receptors was used in the original, leading to some discrepencies with the frequency of spike and wave oscillations.
+</p><p>The code can be run in the NEURON simulation environment, which can be found at <a href="https://www.neuron.yale.edu/neuron/">https://www.neuron.yale.edu/neuron/</a>  If you need more help than provided below, please consult this web page:<p/>
+    <a href="https://senselab.med.yale.edu/ModelDB/NEURON_DwnldGuide.cshtml">https://senselab.med.yale.edu/ModelDB/NEURON_DwnldGuide.cshtml</a>
+</p><p>To recreate figures from figure 2 of the Knox paper, do the following:<br/>
+1) download and extract the zip file.<br/>
+2) use mknrndll (windows) or nrnivmodl (unix and mac) to compile the mod files.<br/>
+    3) Open rundemo.mod in NEURON and select "3Hz Spike and Wave," then click init and run to run the simulation<br/>
+    <img src="./screenshot1.png"><p/>
+
+    4) To save a state after the simulation is run, type "writestate()" at the neuron prompt, which saves the state to state_data.txt.<br/>
+5) To load a simulation (usuful for starting from a steady state), the variable trans must be set to Tstop from the saved simulation.  The program then loads the state saved in the file state_data.txt.<br/>
+    6) For a black and white raster plot showing firing times, type "rasterplot()" at the neuron prompt<br/>
+    <img src="./screenshot2.png"><p/>
+    7) For the detailed heat map shown in figure 2, type "writedatafile()" at the neuron prompt.  This will create a file membrane_data.txt.  Move this file to same directory as the python script membrane_potential_heat_plot.py, and run the script to generate the heat plot.<br/>
+        <img src="./screenshot3.png" width="550"><p/>
+
+8) To vary cortical GABA-A conductance, change the gabaapercent variable.  <br/>
+9) To vary T-type calcium channel parameters, change taubase_itrecustom, shift_itrecustom, or gcabar_itrecustom.***Note: experimental values for tau_base should be multiplied by the phi_h factor that can be found in itrecustom.mod.  In other words, tau_0 of 28.3 is equivalent to taubase_itrecustom = 85.
+</p><p>Code is provided as-is, and some aspects of implementation may be counter-intuitive (such as some details of the implementation of GABA-B receptors).  Feel free to contact me with questions.
+</p>
+<p>Andrew Knox<br/>
+Department of Neurology<br/>
+University of Wisconsin<br/>
+<a href="mailto:Knox@neurology.wisc.edu">Knox@neurology.wisc.edu</a>
+</p><p>The bulk of this work was completed while I was a child neurology resident and epilepsy fellow at Cincinnati Children's Hospital Medical Center.
+</p>
+
+</html>
